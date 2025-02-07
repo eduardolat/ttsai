@@ -9,6 +9,8 @@ alias la='ls -A'
 alias l='ls -CF'
 alias ..='cd ..'
 alias c='clear'
+alias python='python3'
+alias pip='pip3'
 echo "[OK] aliases set"
 
 echo "
