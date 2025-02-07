@@ -29,7 +29,7 @@ COPY --from=golang /usr/local/go /usr/local/go
 # Add PostgreSQL repository and install system dependencies
 # https://www.postgresql.org/download/linux/debian/
 RUN apt update && apt install -y \
-        wget zip unzip p7zip-full tzdata git python3 python3-pip && \
+        ffmpeg wget zip unzip p7zip-full tzdata git python3 python3-pip && \
     rm -rf /var/lib/apt/lists/*
 
 # Install torch CPU
