@@ -60,8 +60,8 @@ RUN set -e && \
 
 # Default git config
 # https://github.com/golangci/golangci-lint/issues/4033
-RUN git config --global --add safe.directory '*' && \
-    git config --global core.fileMode false
+RUN git config --add safe.directory '*' && \
+    git config core.fileMode false
 
 # Go to the app dir, delete the temporary dir and create backups dir
 WORKDIR /app
