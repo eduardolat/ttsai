@@ -3,7 +3,6 @@
     "dockerfile": "../docker/Dockerfile.dev",
     "context": ".."
   },
-  "runArgs": ["--gpus", "all"],
   "customizations": {
     "vscode": {
       "extensions": [

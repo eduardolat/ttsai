@@ -32,36 +32,14 @@ RUN apt update && apt install -y \
         wget zip unzip p7zip-full tzdata git python3 python3-pip && \
     rm -rf /var/lib/apt/lists/*
 
-# Install downloadable binaries
-RUN set -e && \
-    if [ "${TARGETPLATFORM}" = "linux/arm64" ]; then \
-        echo "Downloading arm64 binaries" && \
-        # Install task
-        wget --no-verbose https://github.com/go-task/task/releases/download/v3.38.0/task_linux_arm64.tar.gz && \
-        tar -xzf task_linux_arm64.tar.gz && \
-        mv ./task /usr/local/dl/bin/task && \
-        # Install golangci-lint
-        wget --no-verbose https://github.com/golangci/golangci-lint/releases/download/v1.60.3/golangci-lint-1.60.3-linux-arm64.tar.gz && \
-        tar -xzf golangci-lint-1.60.3-linux-arm64.tar.gz && \
-        mv ./golangci-lint-1.60.3-linux-arm64/golangci-lint /usr/local/dl/bin/golangci-lint; \
-    else \
-        echo "Downloading amd64 binaries" && \
-        # Install task
-        wget --no-verbose https://github.com/go-task/task/releases/download/v3.38.0/task_linux_amd64.tar.gz && \
-        tar -xzf task_linux_amd64.tar.gz && \
-        mv ./task /usr/local/dl/bin/task && \
-        # Install golangci-lint
-        wget --no-verbose https://github.com/golangci/golangci-lint/releases/download/v1.60.3/golangci-lint-1.60.3-linux-amd64.tar.gz && \
-        tar -xzf golangci-lint-1.60.3-linux-amd64.tar.gz && \
-        mv ./golangci-lint-1.60.3-linux-amd64/golangci-lint /usr/local/dl/bin/golangci-lint; \
-    fi && \
-    # Make binaries executable
-    chmod +x /usr/local/dl/bin/*
+# Install torch CPU
+RUN pip install --break-system-packages torch==2.4.1 torchvision==0.19.1 torchaudio==2.4.1 --index-url https://download.pytorch.org/whl/cpu
 
-# Default git config
-# https://github.com/golangci/golangci-lint/issues/4033
-RUN git config --add safe.directory '*' && \
-    git config core.fileMode false
+# Install F5-TTS
+RUN pip install --break-system-packages git+https://github.com/jpgallegoar/Spanish-F5.git
+
+# Install taskfile
+RUN go install github.com/go-task/task/v3/cmd/task@v3.41.0
 
 # Go to the app dir, delete the temporary dir and create backups dir
 WORKDIR /app
